@@ -42,9 +42,15 @@ get_incomingcall_number() 来电号码
 get_qcom_log() 日志
 get_cpuinfo() CPU
 get_meninfo() 内存
-###等待
+###获取对象属性
+child()
+sibling()
+###判断出现与消失
 wait(action,timeout=10000) action=idle等待应用程序处于空闲状态
 wait(action,timeout=1000,package_name=None) action=upgrade等待窗口内容更新事件
+>>>案例
+d(text='Incoming call').wait.exists(timeout=1000)
+d(text='Incoming call').wait.gone(timeout=1000)
 ###选择器
 ####文本类
 text 文本
@@ -74,3 +80,21 @@ focused 当前焦点属性
 longClickable长按属性
 scrollable 滚动属性
 selected 选择属性
+###获取对象属性
+child() 获取子类
+sibling() 获取兄弟类
+getChildCount() 子类数量
+getClassName() 属性的类名
+getContentDescription() 属性的描述文本
+getPackageName() 属性的包名文本
+get_text() 文本属性中的文本
+###属性判断(检查是否为true)
+isCheckable() 
+isChecked()
+isClickable() 
+isEnabled()
+isFocusable()
+isFocused()
+isLongClickable()
+isScrollable()
+isSelected()
