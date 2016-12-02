@@ -10,10 +10,18 @@ d.wakeup() d.screen.on() d.sleep() d.screenoff()
 .click.wait(timeout=3000)点击等待出现，超时
 .click.bottomright()点击对象右下角
 .click.topleft()点击对象左上角
-####long click(x,y)  
-drag(startX,startY,endX,endY,steps)  
+####long_click(x,y)  
+.long_click.bottomright()长按对象右下角
+.long_click.topleft()长按对象左上角
+####drag(startX,startY,endX,endY,steps)  
+####swipe('directioin',steps=10) direction滑动方向:up,down,right,left
 dump(filename) save_path:/data/local/tmp
-swipe('directioin',steps=10) direction滑动方向:up,down,right,left,
+####手势操作
+d.pinch.In(perent=100,steps=10)
+d.pinch.Out(percent=100,steps=10)
+###输入
+set_text(text)输入文本
+clear_text()清空文本
 ###打开操作
 d.open(action) action:notification,quick_settings
 d.start_activity('package_name','service_name')  
