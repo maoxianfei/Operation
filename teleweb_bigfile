@@ -1,0 +1,96 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+import re
+import requests
+import os
+import urllib.request
+import sys, time
+
+def get_downlist(url):
+
+    tele_session = requests.session()
+    # webdata=tele_session.get(url)
+    webdata=tele_session.get(url,auth=('temp','temp123'))
+    patter=re.compile('<a href="(.*?)".*?</a></td><td align="right">')
+    content=patter.findall(webdata.text)
+    down_list=[]
+    for i in content:
+        down_list.append(str(i))
+        # print(i)
+    # print('down:',down_list)
+    return down_list
+def downloadfile1(url,downlist,path):
+    start=time.clock()
+    for i in downlist:
+        print('File downloading :',i)
+        urllib.request.urlretrieve(url+i,path+i,Schedule)
+    end=time.clock()
+    t = (start - end) / 60
+    print(t)
+
+
+def downloadfile2(url,downlist,path):
+    for i in downlist:
+        url=url+i
+        r = requests.get(url, auth=('temp', 'temp123'),stream=True)
+        with open(path+i, "wb") as f:
+            for chunk in r.iter_content(chunk_size=512*1024*1024):
+                if chunk:
+                    f.write(chunk)
+def Schedule(a,b,c):
+    '''''
+    a:已经下载的数据块
+    b:数据块的大小
+    c:远程文件的大小
+   '''
+    per = 100.0 * a * b / c
+    if per > 100 :
+        per = 100
+    print ('%.2f%%' % per,end='\n')
+    # sys.stdout.flush()
+
+def downloadfile3(url,downlist,path):
+    start = time.clock()
+    for i in downlist:
+        r = requests.get(url+i,auth=('temp','temp123'))
+        print(i)
+        with open(path+i, "wb") as code:
+            code.write(r.content)
+    end = time.clock()
+    t = (start - end) / 60
+    print('完成时间为：',t)
+def mkdir(PR):
+    # filetime = time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime(time.time()))
+    path = './Mickey6TVZW/' + PR+'/'
+    # 创建 flower_beauty 文件夹
+    if not os.path.exists('./Mickey6TVZW'):
+        os.mkdir('./Mickey6TVZW')
+    # 创建 时间戳文件夹和链接缓存文本
+    if not os.path.exists(path):
+        os.mkdir(path)
+    return path
+
+def main():
+    PR = 'v5G51-B'
+    # url = 'http://10.128.180.223/teleweb_defect/Mickey6TVZW/'+PR+'/'
+    url = 'http://10.128.161.96/0_Shenzhen/Mickey6TVZW/daily_version/'+PR+'/'
+
+    downlist=get_downlist(url)
+    path=mkdir(PR)
+    downloadfile3(url,downlist,path)
+    # print(downlist)
+
+if __name__=='__main__':
+
+    main()
+    # url='http://10.128.180.223/teleweb_defect/Mickey6TVZW/4014679/cache.img'
+    # data=requests.get(url)
+    # print(data.content)
+
+    # for i in range(10):
+    #     p = "\r%s" % i
+    #     print(p,end='')
+    #     sys.stdout.flush()
+    #     # time.sleep(1)
+
